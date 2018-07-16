@@ -11,6 +11,8 @@ const isWin = /^win/.test(process.platform);
 const webEntry = {};
 const weexEntry = {};
 
+const precompile = require('weex-vue-precompiler')(/*optional config*/)
+
 // Wraping the entry file for web.
 const getWebEntryFileContent = (entryPath, vueFilePath) => {
   let relativeVuePath = path.relative(path.join(entryPath, '../'), vueFilePath);
@@ -132,17 +134,32 @@ const webConfig = {
              * important! should use postTransformNode to add $processStyle for
              * inline style prefixing.
              */
-            
+
+            optimizeSSR: false,
             compilerModules: [
               {
                 postTransformNode: el => {
                   // to convert vnode for weex components.
-                  // require('weex-vue-precompiler')()(el)
-                  el.staticStyle = `$processStyle(${el.staticStyle})`
-                  el.styleBinding = `$processStyle(${el.styleBinding})`
+                  precompile(el)
                 }
               }
-            ]
+            ],
+            postcss: [
+              // to convert weex exclusive styles.
+              require('postcss-plugin-weex')(),
+              require('autoprefixer')({
+                browsers: ['> 0.1%', 'ios >= 8', 'not ie < 12']
+              }),
+              require('postcss-plugin-px2rem')({
+                // base on 750px standard.
+                rootValue: 75,
+                // to leave 1px alone.
+                minPixelValue: 1.01
+              })
+            ],
+
+            
+           
             
           })
         }],

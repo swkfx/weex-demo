@@ -33,6 +33,7 @@ export default {
   padding-left: 30px;
   background-color: #fafafa;
   margin-bottom: 5wx;
+  /* justify-content: space-around; */
 }
 
 .card {  

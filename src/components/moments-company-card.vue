@@ -1,48 +1,32 @@
 <template>
-  <div>
-    <div class="box-flex-row box-margin">
-        <image class="avatar" :src="data.headerUrl"/>
-        <div class="left">
-          <div class="box-flex-row box-company-title">
-            <text class="company-name-text">{{ data.name }}</text>
-            <image class="company-tag-img" src="/image/ic_v.png"/>
-            <text class="company-tag-text">公司</text>
-          </div>
-          <div class="company-detail">
-              <image class="company-detail-img" :src="data.urls[0]" resize="cover" />
-              <text class="company-detail-title">{{ data.content }}</text>    
-          </div>
-          <div @click="onClick('http://www.baidu.com')" class="box-flex-row box-company-link">
-            <text class="company-link-text">查看详情</text>
-            <image class="company-link-img" src="/image/ic_link.png"/>
-          </div>
-
-          <page-like-comment></page-like-comment>
+  <div class="box-flex-row box-margin">
+      <image class="avatar" src="http://www.qqzhi.com/uploadpic/2015-01-14/025418549.jpg"/>
+      <div class="left">
+        <div class="box-flex-row box-company-title">
+          <text class="company-name-text">加推科技</text>
+          <image class="company-tag-img" src="/image/ic_v.png"/>
+          <text class="company-tag-text">公司</text>
         </div>
-    </div>
-    <div class="line"></div>
+        <div class="company-detail">
+            <image class="company-detail-img" src="https://p2.gexing.com/shaitu/20130203/1141/510ddc567c127.jpg"/>
+            <text class="company-detail-title" lines="1">加推[名片电商]来了!开启'全...</text>    
+        </div>
+        <div @click="onClick('http://www.baidu.com')" class="box-flex-row box-company-link">
+          <text class="company-link-text">查看详情</text>
+          <image class="company-link-img" src="/image/ic_link.png"/>
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
-import PageLikeComment from './page-like-comment.vue'
-
 const event = weex.requireModule("event");
 
 export default {
-  components: {
-    PageLikeComment,
-  },
-  props: {
-    data: {
-      type: Object,
-      default: {}
-    }
-  },
   methods: {
     onClick: function(url) {
       const pageUrl =
-        "http://192.168.4.118:8081/dist/web-page.js?_wx_tpl=http://192.168.4.118:8081/dist/web-page.js";
+        "http://10.2.201.120:8081/dist/page/web-page.js?_wx_tpl=http://10.2.201.120:8081/dist/page/web-page.js%3fwebpage_url%3dhttp%3a%2f%2fwww.baidu.com";
       event.openURL(pageUrl);
       
     }
@@ -59,7 +43,11 @@ export default {
 }
 
 .box-margin {
-  padding: 12wx;
+  margin: 12wx;
+}
+
+.left {
+  flex: 1;
 }
 
 .avatar {
@@ -85,9 +73,6 @@ export default {
   height: 16wx;
   margin-right: 12wx;
 }
-.left {
-  flex: 1;
-}
 
 .company-tag-text {
   padding-left: 8wx;
@@ -103,6 +88,7 @@ export default {
 }
 
 .company-detail {
+  margin-right: 12wx;
   background-color: #f3f3f3;
   padding: 8wx;
 }
@@ -118,8 +104,6 @@ export default {
   padding-bottom: 20wx;
   color: #2c3e50;
   font-weight: bold;
-  lines: 1;
-  text-overflow: ellipsis;
 }
 
 .box-company-link {
@@ -135,10 +119,5 @@ export default {
 .company-link-img {
   width: 16wx;
   height: 16wx;
-}
-
-.line {
-  height: 1wx;
-  background-color: #efeff4;
 }
 </style>
